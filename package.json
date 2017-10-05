@@ -1,0 +1,24 @@
+{
+  "name": "vue-webpack-template",
+  "version": "1.0.0",
+  "description": "Vue-webpack template step by step",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Luummii/vue-webpack-template.git"
+  },
+  "keywords": [],
+  "author": "Andrey Zimin (Luummii)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Luummii/vue-webpack-template/issues"
+  },
+  "homepage": "https://github.com/Luummii/vue-webpack-template#readme",
+  "devDependencies": {
+    "webpack": "^3.6.0"
+  }
+}
