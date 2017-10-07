@@ -2,6 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 
 module.exports = {
   entry: {
@@ -15,6 +16,12 @@ module.exports = {
   watchOptions: {
     aggregateTimeout: 300,
     poll: 1000
+  },
+  stats: {
+    colors: true,
+    modules: true,
+    reasons: true,
+    errorDetails: true
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -32,6 +39,17 @@ module.exports = {
     new webpack.WatchIgnorePlugin([
       path.join(__dirname, 'node_modules')
     ]),
-    new ProgressBarPlugin()
+    new ProgressBarPlugin(),
+    new FriendlyErrorsPlugin({
+      compilationSuccessInfo: {
+        messages: ['You appication is running here http://localhost:8080', 'You appication is running here http://localhost:8080'],
+        notes: ['Some additionsl notes to be displayed unpon successful compilatioin']
+      },
+      onErrors: function (severity, errors) {
+        console.log('severity = ', severity)
+        console.log('errors = ', errors)
+      },
+      clearConsole: true
+    })
   ]
 }

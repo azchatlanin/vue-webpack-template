@@ -1,2 +1,1 @@
-clear
 npm run build
