@@ -4,7 +4,8 @@
   "description": "Vue-webpack template step by step",
   "main": "index.js",
   "scripts": {
-    "build": "webpack",
+    "dev": "webpack-dev-server --env development",
+    "build": "webpack --env production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,6 +24,8 @@
     "friendly-errors-webpack-plugin": "^1.6.1",
     "html-webpack-plugin": "^2.30.1",
     "progress-bar-webpack-plugin": "^1.10.0",
-    "webpack": "^3.6.0"
+    "webpack": "^3.6.0",
+    "webpack-dev-server": "^2.9.1",
+    "webpack-merge": "^4.1.0"
   }
 }

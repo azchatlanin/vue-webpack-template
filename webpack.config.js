@@ -1,11 +1,12 @@
 const path = require('path')
 const webpack = require('webpack')
+const merge = require('webpack-merge')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin')
 
-module.exports = {
+const baseConfig = {
   entry: {
     app: path.join(__dirname, 'src')
   },
@@ -13,11 +14,6 @@ module.exports = {
     path: path.join(__dirname, 'dist'),
     filename: 'js/[name].js'
   },
-  /* watch: true,
-  watchOptions: {
-    aggregateTimeout: 300,
-    poll: 1000
-  }, */
   stats: {
     colors: true,
     modules: true,
@@ -36,36 +32,72 @@ module.exports = {
         collapseWhitespace: true,
         removeAttributeQuotes: true
       }
-    }),
-    new webpack.WatchIgnorePlugin([
-      path.join(__dirname, 'node_modules')
-    ]),
-    new ProgressBarPlugin(),
-    new FriendlyErrorsPlugin({
-      compilationSuccessInfo: {
-        messages: ['You appication is running here http://localhost:8080', 'You appication is running here http://localhost:8080'],
-        notes: ['Some additionsl notes to be displayed unpon successful compilatioin']
-      },
-      onErrors: function (severity, errors) {
-/*         console.log('severity = ', severity)
-        console.log('errors = ', errors) */
-      },
-      clearConsole: true
-    }),
-    new webpack.NoEmitOnErrorsPlugin(),
-    new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('production')
-      }
-    }),
-    new CompressionPlugin({
-      asset: '[path].gz[query]',
-      algorithm: 'gzip',
-      test: /\.(js|css|html|svg)$/,
-      /* deleteOriginalAssets: true, */
-      threshold: 0,
-      minRatio: 0.8
     })
   ]
+}
+const productionConfig = () => {
+  const config = {
+    plugins: [
+      new ProgressBarPlugin(),
+      new webpack.DefinePlugin({
+        'process.env': {
+          NODE_ENV: JSON.stringify('production')
+        }
+      }),
+      new webpack.optimize.OccurrenceOrderPlugin(),
+      new CompressionPlugin({
+        asset: '[path].gz[query]',
+        algorithm: 'gzip',
+        test: /\.(js|css|html|svg)$/,
+        /* deleteOriginalAssets: true, */
+        threshold: 0,
+        minRatio: 0.8
+      })
+    ]
+  }
+  return merge(baseConfig, config)
+}
+const developmentConfig = () => {
+  const config = {
+    devServer: {
+      historyApiFallback: true,
+      stats: 'errors-only',
+      watchOptions: {
+        aggregateTimeout: 300,
+        poll: 1000
+      },
+      host: process.env.HOST,
+      port: process.env.PORT
+    },
+    plugins: [      
+      new webpack.WatchIgnorePlugin([
+        path.join(__dirname, 'node_modules')
+      ]),
+      
+      new FriendlyErrorsPlugin({
+        compilationSuccessInfo: {
+          messages: ['You appication is running here http://localhost:8080', 'You appication is running here http://localhost:8080'],
+          notes: ['Some additionsl notes to be displayed unpon successful compilatioin']
+        },
+        onErrors: function (severity, errors) {
+  /*         console.log('severity = ', severity)
+          console.log('errors = ', errors) */
+        },
+        clearConsole: true
+      }),
+      new webpack.NoEmitOnErrorsPlugin(),    
+      new webpack.DefinePlugin({
+        'process.env': {
+          NODE_ENV: JSON.stringify('development')
+        }
+      })
+    ]
+  }
+  return merge(baseConfig, config)
+}
+
+module.exports = (env) => {
+  console.log('env = ', env)
+  if (env === 'production') return productionConfig()
+  return developmentConfig()
 }
