@@ -16,19 +16,8 @@ module.exports =  {
     reasons: true,
     errorDetails: true
   },
-  module: {
-    rules: [
-      {
-        test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: 'css-loader?module'
-        })        
-      }
-    ]
-  },
   plugins: [
-    new ExtractTextPlugin('styles.css'),
+    new ExtractTextPlugin('css/styles.css'),
     new HtmlWebpackPlugin({
       title: 'Vue-webpack template step by step',
       filename: 'index.html',

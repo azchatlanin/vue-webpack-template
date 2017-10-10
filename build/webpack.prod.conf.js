@@ -1,9 +1,16 @@
 const webpack = require('webpack')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin')
-
+const utils = require('./utils')
 
 module.exports = {
+  module: {
+    rules: utils.styleLoaders({ 
+      sourceMap: true,
+      extract: true
+    })
+  },
+  devtool: '#source-map',
   plugins: [
     new ProgressBarPlugin(),
     new webpack.DefinePlugin({

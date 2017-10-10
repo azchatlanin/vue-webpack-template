@@ -1,4 +1,4 @@
-import style from './assets/styles.css'
+import style from './assets/styles.styl'
 
 export default (text = 'Hello word!') => {
   const element = document.createElement('div')
