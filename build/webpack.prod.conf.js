@@ -39,7 +39,7 @@ module.exports = merge(baseConf, {
       asset: '[path].gz[query]',
       algorithm: 'gzip',
       test: new RegExp(
-        '\\.(' + config.prod.productionGzipExtension.join('|') + ')$'
+        '\\.(' + config.prod.productionGzipExtensions.join('|') + ')$'
       ),
       /* deleteOriginalAssets: true, */
       threshold: 0,

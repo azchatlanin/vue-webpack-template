@@ -10,7 +10,7 @@ module.exports = {
       NODE_ENV: JSON.stringify('production')
     },
     productionSourceMap: true,
-    productionGzipExtension: ['js', 'css']
+    productionGzipExtensions: ['js', 'css']
   },
   dev: {
     assetsRoot: path.join(__dirname, '..', 'dist'),

@@ -27,6 +27,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Vue-webpack template step by step',
       filename: 'index.html',
+      template: 'index.html',
       inject: true
     }),      
     new webpack.WatchIgnorePlugin([
