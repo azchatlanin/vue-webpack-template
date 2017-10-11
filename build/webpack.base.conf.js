@@ -1,14 +1,19 @@
 const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const config = require('../config')
 
 module.exports =  {
   entry: {
     app: path.join(__dirname, '..', 'src')
   },
   output: {
-    path: path.join(__dirname, '..', 'dist'),
-    filename: 'js/[name].js'
+    path: process.env.NODE_ENV === 'production'
+    ? config.prod.assetsRoot
+    : config.dev.assetsRoot,
+    filename: 'js/[name].js',
+    publicPath: process.env.NODE_ENV === 'production'
+    ? config.prod.assetsPublicPath
+    : config.dev.assetsPublicPath
   },
   stats: {
     colors: true,
@@ -17,18 +22,10 @@ module.exports =  {
     errorDetails: true
   },
   plugins: [
-    new ExtractTextPlugin('css/styles.css'),
-    new HtmlWebpackPlugin({
-      title: 'Vue-webpack template step by step',
-      filename: 'index.html',
-      inject: true,
-      hash: true,
-      template: 'index.html',
-      minify: {
-        removeComments: true,
-        collapseWhitespace: true,
-        removeAttributeQuotes: true
-      }
-    })
+    new ExtractTextPlugin(
+      process.env.NODE_ENV === 'production'
+      ? config.prod.stylePath
+      : config.dev.stylePath
+    )
   ]
 }
