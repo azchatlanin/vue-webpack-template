@@ -1,7 +1,8 @@
 import Vue from 'vue'
-import app from './App.vue'
+import App from './App.vue'
 
 new Vue({
   el: '#app',
-  render: h => h(app)
+  template: '<App/>',
+  components: { App }
 })

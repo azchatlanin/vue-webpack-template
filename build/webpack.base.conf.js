@@ -1,6 +1,6 @@
 const path = require('path')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const config = require('../config')
+const vueLoaderConf = require('./vue-loader.conf')
 
 module.exports =  {
   entry: {
@@ -21,18 +21,12 @@ module.exports =  {
     reasons: true,
     errorDetails: true
   },
-  plugins: [
-    new ExtractTextPlugin(
-      process.env.NODE_ENV === 'production'
-      ? config.prod.stylePath
-      : config.dev.stylePath
-    )
-  ],
   module: {
     rules: [ 
       {
         test: /\.vue$/,
-        loader: 'vue-loader'
+        loader: 'vue-loader',
+        options: vueLoaderConf
       },
       {
         test: /\.js$/,

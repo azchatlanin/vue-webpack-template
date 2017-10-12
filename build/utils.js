@@ -1,15 +1,14 @@
 const path = require('path')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
-function cssLoaders (options) {
+exports.cssLoaders = function (options) {
   options = options || {}
 
   let cssLoader = {
     loader: 'css-loader',
     options: {
       minimize: options.extract,
-      sourceMap: options.sourceMap,
-      modules: true
+      sourceMap: options.sourceMap
     }
   }
 
@@ -37,13 +36,14 @@ function cssLoaders (options) {
 
   return {
     css: generateLoaders(),
-    styl: generateLoaders('stylus-loader')
+    styl: generateLoaders('stylus-loader'),
+    stylus: generateLoaders('stylus-loader')
   }
 }
 
 exports.styleLoaders = function (options) {
   const output = []
-  const loaders = cssLoaders(options)
+  const loaders = exports.cssLoaders(options)
 
   for (const extension in loaders) {
     const loader = loaders[extension]

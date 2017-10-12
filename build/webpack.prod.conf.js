@@ -2,6 +2,8 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const utils = require('./utils')
 const config = require('../config')
 const merge = require('webpack-merge')
@@ -44,6 +46,24 @@ module.exports = merge(baseConf, {
       /* deleteOriginalAssets: true, */
       threshold: 0,
       minRatio: 0.8
+    }),
+    new ExtractTextPlugin(config.prod.stylePath),
+    new OptimizeCSSPlugin({
+      cssProcessorOptions: {
+        safe: true
+      }
+    }),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        sequences: true,
+        booleans: true,
+        loops: true,
+        unused: true,
+        warnings: false,
+        drop_console: true,
+        unsafe: true
+      },
+      sourceMap: true
     })
   ]
 })
