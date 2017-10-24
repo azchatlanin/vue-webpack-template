@@ -2,6 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const utils = require('./utils')
 const config = require('../config')
 
@@ -33,7 +34,7 @@ module.exports = {
     new webpack.WatchIgnorePlugin([
       path.join(__dirname, 'node_modules')
     ]),
-    
+    new ExtractTextPlugin(config.dev.stylePath),
     new FriendlyErrorsPlugin({
       compilationSuccessInfo: {
         messages: ['You appication is running here http://localhost:8080'],
